@@ -2,139 +2,515 @@
 <html lang="mr">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>लक्ष्मी अंगण AI सहाय्यक</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
-    <!-- External CSS -->
-    <link rel="stylesheet" href="style.css" />
-
-    <!-- ─── अतिरिक्त CSS (फूटर + सुधारणा) ─── -->
     <style>
-        /* === फूटर === */
-        .footer {
-            background: linear-gradient(90deg, #0f4c81, #1d74d7);
-            color: #ffffff;
-            text-align: center;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 400;
+        /* ────────────── RESET & BASE ────────────── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            background: linear-gradient(145deg, #0b1a33 0%, #1a3a6b 50%, #2a5caa 100%);
+            padding: 10px;
+        }
+
+        /* ────────────── CONTAINER ────────────── */
+        .container {
+            width: 100%;
+            max-width: 440px;
+            height: 96vh;
+            max-height: 780px;
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        /* ────────────── HEADER ────────────── */
+        .header {
+            background: linear-gradient(135deg, #0f3b6a 0%, #1d6fd9 100%);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             flex-shrink: 0;
-            border-top: 2px solid rgba(255, 255, 255, 0.12);
-            letter-spacing: 0.3px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: white;
+            padding: 3px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .logo-text h2 {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 11px;
+            opacity: 0.85;
+            font-weight: 400;
+            display: block;
+            margin-top: -2px;
+        }
+
+        .status {
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 4px 12px 4px 8px;
+            border-radius: 30px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #34d399;
+            display: inline-block;
+            animation: blink 1.2s infinite;
+        }
+
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* ────────────── CHAT BOX ────────────── */
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 14px 10px;
+            background: #f0f6fe;
+            scroll-behavior: smooth;
+        }
+
+        .chat-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-box::-webkit-scrollbar-thumb {
+            background: #1d6fd9;
+            border-radius: 10px;
+        }
+
+        /* ────────────── MESSAGES ────────────── */
+        .message {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+            gap: 8px;
+            animation: msgIn 0.3s ease-out;
+        }
+
+        @keyframes msgIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 2px solid white;
+            object-fit: cover;
+            background: #1d6fd9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .message .avatar.bot-avatar {
+            background: linear-gradient(135deg, #0f3b6a, #1d6fd9);
+        }
+
+        .message .avatar.user-avatar {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            order: 1;
+        }
+
+        .bubble {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 14px 14px 14px 4px;
+            max-width: 80%;
+            font-size: 13.5px;
+            line-height: 1.6;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+            color: #1a2a3a;
+            word-break: break-word;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.user .bubble {
+            background: linear-gradient(135deg, #1d6fd9, #1557b0);
+            color: white;
+            border-radius: 14px 14px 4px 14px;
+        }
+
+        /* ────────────── TYPING ────────────── */
+        #typing .bubble {
+            display: flex;
+            gap: 4px;
+            padding: 12px 18px;
+            background: white;
+        }
+
+        #typing .bubble span {
+            width: 7px;
+            height: 7px;
+            background: #1d6fd9;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typingDot 1.2s infinite;
+        }
+
+        #typing .bubble span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        #typing .bubble span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingDot {
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-6px);
+                opacity: 1;
+            }
+        }
+
+        /* ────────────── QUICK BUTTONS ────────────── */
+        .quick-buttons {
+            padding: 8px 10px 6px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            background: #ffffff;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        .quick-buttons button {
+            border: none;
+            padding: 8px 4px;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #f4f8ff;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            font-size: 11px;
+            color: #0f3b6a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .quick-buttons button i {
+            font-size: 12px;
+        }
+
+        .quick-buttons button:hover {
+            background: #1d6fd9;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .quick-buttons button:active {
+            transform: scale(0.94);
+        }
+
+        /* ────────────── INPUT AREA ────────────── */
+        .input-area {
+            display: flex;
+            padding: 8px 12px 12px;
+            background: white;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            gap: 8px;
+            flex-shrink: 0;
+            align-items: center;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 1.5px solid #e2e8f0;
+            outline: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            color: #1a2a3a;
+            min-height: 44px;
+        }
+
+        .input-area input:focus {
+            border-color: #1d6fd9;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(29, 111, 217, 0.12);
+        }
+
+        .input-area input::placeholder {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .input-area button {
+            width: 46px;
+            height: 46px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1d6fd9, #1557b0);
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(29, 111, 217, 0.3);
+        }
+
+        .input-area button:active {
+            transform: scale(0.92);
+        }
+
+        /* ────────────── FOOTER ────────────── */
+        .footer {
+            background: linear-gradient(90deg, #0f3b6a, #1d6fd9);
+            color: white;
+            padding: 6px 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            border-top: 2px solid rgba(255, 255, 255, 0.08);
+            font-size: 11px;
             flex-wrap: wrap;
         }
 
-        .footer a {
+        .footer .brand {
+            font-weight: 700;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.10);
+            padding: 3px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer .brand i {
+            color: #fbbf24;
+        }
+
+        .footer .phone {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .footer .phone i {
+            color: #34d399;
+            font-size: 13px;
+        }
+
+        .footer .phone a {
             color: #fbbf24;
             text-decoration: none;
             font-weight: 600;
             transition: 0.3s;
         }
 
-        .footer a:hover {
+        .footer .phone a:hover {
             color: #ffffff;
             text-decoration: underline;
         }
 
-        .footer .brand {
-            font-weight: 700;
-            font-size: 13px;
-            background: rgba(255, 255, 255, 0.10);
-            padding: 4px 14px;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .footer .phone {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 500;
-        }
-
-        .footer .phone i {
-            color: #34d399;
-            font-size: 14px;
-        }
-
         .footer .free-tag {
             opacity: 0.5;
-            font-size: 10px;
+            font-size: 9px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
 
-        /* === Avatar सुधारणा === */
-        .message img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-        }
-
-        .message.user img {
-            display: none;
-        }
-
-        /* === Responsive फूटर === */
+        /* ────────────── RESPONSIVE ────────────── */
         @media (max-width: 520px) {
+            body {
+                padding: 0;
+            }
+            .container {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                max-width: 100%;
+            }
+
+            .header {
+                padding: 10px 12px;
+            }
+            .logo img {
+                width: 38px;
+                height: 38px;
+            }
+            .logo-text h2 {
+                font-size: 16px;
+            }
+            .logo-text span {
+                font-size: 10px;
+            }
+            .status {
+                font-size: 10px;
+                padding: 3px 10px 3px 6px;
+            }
+
+            .quick-buttons {
+                grid-template-columns: repeat(4, 1fr);
+                padding: 6px 8px 4px;
+                gap: 4px;
+            }
+            .quick-buttons button {
+                font-size: 10px;
+                padding: 6px 2px;
+                border-radius: 8px;
+            }
+            .quick-buttons button i {
+                font-size: 11px;
+            }
+
+            .input-area {
+                padding: 6px 10px 10px;
+                gap: 6px;
+            }
+            .input-area input {
+                font-size: 12px;
+                padding: 8px 12px;
+                min-height: 40px;
+            }
+            .input-area button {
+                width: 40px;
+                height: 40px;
+                font-size: 15px;
+                border-radius: 12px;
+            }
+
+            .bubble {
+                font-size: 12.5px;
+                padding: 8px 12px;
+                max-width: 85%;
+            }
+            .message .avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 13px;
+            }
+
             .footer {
                 font-size: 10px;
-                padding: 6px 12px;
+                padding: 5px 10px;
                 gap: 8px;
             }
             .footer .brand {
-                font-size: 11px;
-                padding: 3px 12px;
+                font-size: 10px;
+                padding: 2px 10px;
             }
             .footer .phone {
-                font-size: 11px;
+                font-size: 10px;
             }
             .footer .free-tag {
-                font-size: 9px;
+                font-size: 8px;
             }
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 380px) {
+            .quick-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .quick-buttons button:nth-child(7) {
+                grid-column: span 1;
+            }
+            .quick-buttons button:nth-child(8) {
+                grid-column: span 1;
+            }
             .footer {
                 flex-direction: column;
-                gap: 4px;
-                padding: 6px 8px;
-            }
-            .footer .brand {
-                font-size: 10px;
-            }
-            .footer .phone {
-                font-size: 10px;
+                gap: 3px;
+                padding: 4px 8px;
             }
         }
 
-        /* === Container ची उंची समायोजित करा (फूटरसाठी) === */
-        .container {
-            display: flex;
-            flex-direction: column;
-            height: 90vh;
-            max-height: 820px;
-        }
-
-        .chat-box {
-            flex: 1;
-            overflow-y: auto;
+        @media (min-width: 600px) {
+            .quick-buttons {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+                padding: 10px 14px 8px;
+            }
+            .quick-buttons button {
+                font-size: 12px;
+                padding: 10px 6px;
+            }
         }
     </style>
 </head>
@@ -146,30 +522,24 @@
         <!-- ═══ HEADER ═══ -->
         <div class="header">
             <div class="logo">
-                <img
-                src="https://laxmilandmarks.com/wp-content/uploads/2024/01/Untitled-design-19.png"
-                alt="Logo"
-                />
-                <div>
+                <img src="https://laxmilandmarks.com/wp-content/uploads/2024/01/Untitled-design-19.png" alt="Logo" />
+                <div class="logo-text">
                     <h2>लक्ष्मी अंगण</h2>
                     <span>AI Assistant</span>
                 </div>
             </div>
             <div class="status">
-                <span class="online"></span>
+                <span class="online-dot"></span>
                 Online
             </div>
         </div>
 
-        <!-- ═══ CHAT AREA ═══ -->
+        <!-- ═══ CHAT BOX ═══ -->
         <div id="chat-box" class="chat-box">
 
-            <!-- Bot Welcome Message -->
+            <!-- Welcome Message -->
             <div class="message">
-                <img
-                src="https://laxmilandmarks.com/wp-content/uploads/2024/01/Untitled-design-19.png"
-                alt="Bot"
-                />
+                <img class="avatar bot-avatar" src="https://cdn-icons-png.flaticon.com/512/4712/4712036.png" alt="Bot" />
                 <div class="bubble">
                     👋 <strong>नमस्कार</strong>
                     <br /><br />
@@ -183,24 +553,19 @@
 
         <!-- ═══ QUICK BUTTONS ═══ -->
         <div class="quick-buttons">
-            <button>🏠 1 BHK</button>
-            <button>🏢 2 BHK</button>
-            <button>💰 Price</button>
-            <button>📍 Location</button>
-            <button>📄 Brochure</button>
-            <button>📅 Site Visit</button>
-            <button>📞 Call</button>
-            <button>🏦 Loan</button>
+            <button><i class="fa-solid fa-bed"></i> 1 BHK</button>
+            <button><i class="fa-solid fa-building"></i> 2 BHK</button>
+            <button><i class="fa-solid fa-indian-rupee-sign"></i> Price</button>
+            <button><i class="fa-solid fa-location-dot"></i> Location</button>
+            <button><i class="fa-solid fa-file-pdf"></i> Brochure</button>
+            <button><i class="fa-solid fa-calendar-check"></i> Visit</button>
+            <button><i class="fa-solid fa-phone"></i> Call</button>
+            <button><i class="fa-solid fa-hand-holding-dollar"></i> Loan</button>
         </div>
 
         <!-- ═══ INPUT AREA ═══ -->
         <div class="input-area">
-            <input
-            type="text"
-            id="userInput"
-            placeholder="Type your message..."
-            autocomplete="off"
-            />
+            <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off" />
             <button id="sendBtn">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
@@ -208,18 +573,154 @@
 
         <!-- ═══ FOOTER ═══ -->
         <div class="footer">
-            <span class="brand">                <a href="https://sites.google.com/view/satish-shende/home">Digital Shende</a>            </span>
+            <span class="brand">
+                <i class="fa-solid fa-code"></i> Digital Shende
+            </span>
             <span class="phone">
                 <i class="fa-solid fa-phone"></i>
-                <a href="tel:9325856311">9325856311</a>            </span>
+                <a href="tel:9325856311">9325856311</a>
+            </span>
             <span class="free-tag">
-                <i class="fa-regular fa-heart"></i>Be Digital            </span>        </div>
+                <i class="fa-regular fa-heart"></i> फ्री सेवा
+            </span>
+        </div>
 
     </div>
     <!-- /.container -->
 
     <!-- ─── JavaScript ─── -->
-    <script src="script.js"></script>
+    <script>
+        // ─── Google Sheet API URL (तुमची URL इथे बदला) ───
+        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbynJECs_N4wgksb2SpQGiYh3hf5E8gIKmYVP6hCSB6gke2ZWNb-YGlICxbg4pVkSysUIw/exec";
+
+        // Session ID
+        if (!sessionStorage.getItem('sessionId')) {
+            sessionStorage.setItem('sessionId', 'user_' + Date.now());
+        }
+
+        const chatBox = document.getElementById("chat-box");
+        const input = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
+
+        // ─── Quick Buttons ───
+        document.querySelectorAll(".quick-buttons button").forEach(button => {
+            button.addEventListener("click", () => {
+                sendMessage(button.innerText.trim());
+            });
+        });
+
+        sendBtn.addEventListener("click", () => sendMessage(input.value));
+        input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") sendMessage(input.value);
+        });
+
+        // ─── Send Message ───
+        function sendMessage(message) {
+            if (message.trim() === "") return;
+            addUserMessage(message);
+            input.value = "";
+            showTyping();
+
+            setTimeout(() => {
+                removeTyping();
+                const reply = botReply(message);
+                sendToSheet(message, reply);
+            }, 1200);
+        }
+
+        // ─── User Message ───
+        function addUserMessage(text) {
+            chatBox.innerHTML += `
+                <div class="message user">
+                    <div class="bubble">${text}</div>
+                    <img class="avatar user-avatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User" />
+                </div>
+            `;
+            scrollBottom();
+        }
+
+        // ─── Bot Reply ───
+        function botReply(msg) {
+            const lower = msg.toLowerCase();
+            let answer = "";
+            if (lower.includes("1 bhk") || lower.includes("१")) {
+                answer = "🏠 आमच्याकडे प्रशस्त 1 BHK फ्लॅट उपलब्ध आहेत.";
+            } else if (lower.includes("2 bhk") || lower.includes("२")) {
+                answer = "🏢 Premium 2 BHK फ्लॅट उपलब्ध आहेत.";
+            } else if (lower.includes("price") || lower.includes("किंमत")) {
+                answer = "💰 कृपया तुमचा मोबाईल नंबर द्या. Sales Team किंमत सांगेल.";
+            } else if (lower.includes("location") || lower.includes("स्थान")) {
+                answer = "📍 लक्ष्मी अंगण, शिरवळ. पुणे-बेंगळुरू महामार्गापासून २ मिनिटे.";
+            } else if (lower.includes("brochure") || lower.includes("ब्रोशर")) {
+                answer = "📄 ब्रोशरसाठी <a href='tel:9325856311' style='color:#fbbf24;'>9325856311</a> वर WhatsApp करा.";
+            } else if (lower.includes("visit") || lower.includes("साइट")) {
+                answer = "📅 Site Visit साठी तुमचे नाव व मोबाईल नंबर पाठवा.";
+            } else if (lower.includes("call") || lower.includes("कॉल")) {
+                answer = "📞 <a href='tel:9325856311' style='color:#fbbf24;text-decoration:underline;'>9325856311</a>";
+            } else if (lower.includes("loan") || lower.includes("कर्ज")) {
+                answer = "🏦 Home Loan सुविधा उपलब्ध आहे. बँकेशी संलग्न.";
+            } else if (lower.includes("नमस्कार") || lower.includes("हाय") || lower.includes("hi")) {
+                answer = "👋 नमस्कार! मी तुमची कशी मदत करू?";
+
+            } else if (/^\d{10}$/.test(lower)) {
+                answer = "✅ तुमचा नंबर नोंदवला गेला आहे. लवकरच आम्ही संपर्क करू.";
+            } else {
+                answer = "🤖 धन्यवाद. तुमचा प्रश्न AI कडे पाठवला जाईल.";
+            }
+
+            chatBox.innerHTML += `
+                <div class="message">
+                    <img class="avatar bot-avatar" src="https://cdn-icons-png.flaticon.com/512/4712/4712036.png" alt="Bot" />
+                    <div class="bubble">${answer}</div>
+                </div>
+            `;
+            scrollBottom();
+            return answer;
+        }
+
+        // ─── Typing ───
+        function showTyping() {
+            chatBox.innerHTML += `
+                <div class="message" id="typing">
+                    <img class="avatar bot-avatar" src="https://cdn-icons-png.flaticon.com/512/4712/4712036.png" alt="Bot" />
+                    <div class="bubble"><span></span><span></span><span></span></div>
+                </div>
+            `;
+            scrollBottom();
+        }
+
+        function removeTyping() {
+            const el = document.getElementById("typing");
+            if (el) el.remove();
+        }
+
+        function scrollBottom() {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // ─── Google Sheet वर डेटा पाठवा ───
+        function sendToSheet(userMsg, botReply) {
+            const payload = {
+                userMessage: userMsg,
+                botReply: botReply,
+                sessionId: sessionStorage.getItem('sessionId')
+            };
+
+            console.log("Sending to Sheet:", payload);
+
+            fetch(SHEET_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(() => console.log('Request sent'))
+            .catch(err => console.error('Fetch error:', err));
+        }
+
+        // ─── Focus input on load ───
+        window.addEventListener('load', () => input.focus());
+    </script>
 
 </body>
 </html>
