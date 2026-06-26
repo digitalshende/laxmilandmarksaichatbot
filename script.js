@@ -123,3 +123,14 @@ function sendToSheet(userMsg, botReply) {
         console.error('Fetch error:', error);
     });
 }
+
+
+window.addEventListener('load', function() {
+    // URL मध्ये ?autostart=true आहे का ते तपासा
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('autostart') === 'true') {
+        setTimeout(function() {
+            sendMessage("नमस्कार");
+        }, 1000);
+    }
+});
