@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>लक्ष्मी अंगण AI सहाय्यक</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- ─── अतिरिक्त CSS (फूटर + सुधारणा) ─── -->
+    <style>
+        /* === फूटर === */
+        .footer {
+            background: linear-gradient(90deg, #0f4c81, #1d74d7);
+            color: #ffffff;
+            text-align: center;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 400;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+            border-top: 2px solid rgba(255, 255, 255, 0.12);
+            letter-spacing: 0.3px;
+            flex-wrap: wrap;
+        }
+
+        .footer a {
+            color: #fbbf24;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .footer .brand {
+            font-weight: 700;
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.10);
+            padding: 4px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer .phone {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .footer .phone i {
+            color: #34d399;
+            font-size: 14px;
+        }
+
+        .footer .free-tag {
+            opacity: 0.5;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* === Avatar सुधारणा === */
+        .message img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .message.user img {
+            display: none;
+        }
+
+        /* === Responsive फूटर === */
+        @media (max-width: 520px) {
+            .footer {
+                font-size: 10px;
+                padding: 6px 12px;
+                gap: 8px;
+            }
+            .footer .brand {
+                font-size: 11px;
+                padding: 3px 12px;
+            }
+            .footer .phone {
+                font-size: 11px;
+            }
+            .footer .free-tag {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .footer {
+                flex-direction: column;
+                gap: 4px;
+                padding: 6px 8px;
+            }
+            .footer .brand {
+                font-size: 10px;
+            }
+            .footer .phone {
+                font-size: 10px;
+            }
+        }
+
+        /* === Container ची उंची समायोजित करा (फूटरसाठी) === */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            max-height: 820px;
+        }
+
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- ═══ HEADER ═══ -->
+        <div class="header">
+            <div class="logo">
+                <img
+                src="https://laxmilandmarks.com/wp-content/uploads/2024/01/Untitled-design-19.png"
+                alt="Logo"
+                />
+                <div>
+                    <h2>लक्ष्मी अंगण</h2>
+                    <span>AI Assistant</span>
+                </div>
+            </div>
+            <div class="status">
+                <span class="online"></span>
+                Online
+            </div>
+        </div>
+
+        <!-- ═══ CHAT AREA ═══ -->
+        <div id="chat-box" class="chat-box">
+
+            <!-- Bot Welcome Message -->
+            <div class="message">
+                <img
+                src="https://laxmilandmarks.com/wp-content/uploads/2024/01/Untitled-design-19.png"
+                alt="Bot"
+                />
+                <div class="bubble">
+                    👋 <strong>नमस्कार</strong>
+                    <br /><br />
+                    <strong>लक्ष्मी अंगण</strong> मध्ये आपले स्वागत आहे.
+                    <br /><br />
+                    मी तुमची कशी मदत करू?
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ═══ QUICK BUTTONS ═══ -->
+        <div class="quick-buttons">
+            <button>🏠 1 BHK</button>
+            <button>🏢 2 BHK</button>
+            <button>💰 Price</button>
+            <button>📍 Location</button>
+            <button>📄 Brochure</button>
+            <button>📅 Site Visit</button>
+            <button>📞 Call</button>
+            <button>🏦 Loan</button>
+        </div>
+
+        <!-- ═══ INPUT AREA ═══ -->
+        <div class="input-area">
+            <input
+            type="text"
+            id="userInput"
+            placeholder="Type your message..."
+            autocomplete="off"
+            />
+            <button id="sendBtn">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <!-- ═══ FOOTER ═══ -->
+        <div class="footer">
+            <span class="brand">                <a href="https://sites.google.com/view/satish-shende/home">Digital Shende</a>            </span>
+            <span class="phone">
+                <i class="fa-solid fa-phone"></i>
+                <a href="tel:9325856311">9325856311</a>            </span>
+            <span class="free-tag">
+                <i class="fa-regular fa-heart"></i>Be Digital            </span>        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- ─── JavaScript ─── -->
+    <script src="script.js"></script>
+
+</body>
+</html>
