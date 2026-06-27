@@ -548,7 +548,8 @@
                     <br /><br />
                     <strong>लक्ष्मी अंगण</strong> मध्ये आपले स्वागत आहे.
                     <br /><br />
-                    मी तुमची कशी मदत करू?
+                    मी तुमची कशी मदत करू?<br>
+<b>ठळक वैशिष्ट्ये -</b> ✅ शाळा कॉलेज हॉस्पीटल अगदी जवळच ✅ महारेरा मंजूर ✅ पुणे-बंगळूरू महामार्गाजवळ मोक्याचे ठिकाण ✅ शिरवळ एमआयडीसी जवळ ✅ त्वरित ताबा किंवा बांधकाम सुरू असलेले पर्याय 
                 </div>
             </div>
 
@@ -642,13 +643,13 @@
             const lower = msg.toLowerCase();
             let answer = "";
             if (lower.includes("1 bhk") || lower.includes("१")) {
-                answer = "🏠 आमच्याकडे प्रशस्त 1 BHK फ्लॅट उपलब्ध आहेत.";
+                answer = "🏠 आमच्याकडे प्रशस्त 1 BHK फ्लॅट उपलब्ध आहेत( ६६१ ते ७०२ स्क्वेअर फूट) . अधिक माहितीसाठी कृपया आपला १० अंकी मोबाईल नंबर टाइप करा, आम्ही तुम्हाला कॉल करू.";
             } else if (lower.includes("2 bhk") || lower.includes("२")) {
-                answer = "🏢 Premium 2 BHK फ्लॅट उपलब्ध आहेत.";
+                answer = "🏢 Premium 2 BHK फ्लॅट उपलब्ध आहेत (८२२ ते ८५० स्क्वेअर फूट). अधिक माहितीसाठी कृपया आपला १० अंकी मोबाईल नंबर टाइप करा, आम्ही तुम्हाला कॉल करू.";
             } else if (lower.includes("price") || lower.includes("किंमत")) {
-                answer = "💰 कृपया तुमचा मोबाईल नंबर द्या. Sales Team किंमत सांगेल.";
+                answer = "💰 अधिक माहितीसाठी कृपया आपला १० अंकी मोबाईल नंबर टाइप करा, आम्ही तुम्हाला कॉल करू. Sales Team किंमत सांगेल.";
             } else if (lower.includes("location") || lower.includes("स्थान")) {
-                answer = "📍 लक्ष्मी अंगण, शिरवळ. पुणे-बेंगळुरू महामार्गापासून २ मिनिटे.";
+                answer = "📍 लक्ष्मी अंगण, नायगांव - सांगवी रोड, शिरवळ. पुणे-बेंगळुरू महामार्गापासून २ मिनिटे. अधिक माहितीसाठी कृपया आपला १० अंकी मोबाईल नंबर टाइप करा, आम्ही तुम्हाला कॉल करू.";
             } else if (lower.includes("brochure") || lower.includes("ब्रोशर")) {
                 answer = "📄 ब्रोशरसाठी <a href='tel:8237371724' style='color:#fbbf24;'>8237371724</a> वर WhatsApp करा.";
             } else if (lower.includes("visit") || lower.includes("साइट")) {
@@ -656,19 +657,19 @@
             } else if (lower.includes("call") || lower.includes("कॉल")) {
                 answer = "📞 <a href='tel:8237371724' style='color:#fbbf24;text-decoration:underline;'>8237371724</a>";
             } else if (lower.includes("loan") || lower.includes("कर्ज")) {
-                answer = "🏦 Home Loan सुविधा उपलब्ध आहे. बँकेशी संलग्न.";
+                answer = "🏦 Home Loan सुविधा उपलब्ध आहे. बँकेशी संलग्न.अधिक माहितीसाठी कृपया आपला १० अंकी मोबाईल नंबर टाइप करा, आम्ही तुम्हाला कॉल करू.";
             } else if (lower.includes("नमस्कार") || lower.includes("हाय") || lower.includes("hi")) {
                 answer = "👋 नमस्कार! मी तुमची कशी मदत करू?";
 
             } else if (/^\d{10}$/.test(lower)) {
                 answer = "✅ तुमचा नंबर नोंदवला गेला आहे. लवकरच आम्ही संपर्क करू.";
             } else {
-                answer = "🤖 धन्यवाद. तुमचा प्रश्न AI कडे पाठवला जाईल.";
+                answer = "🤖 धन्यवाद. अधिक माहितीसाठी कृपया आपला १० अंकी मोबाईल नंबर टाइप करा, आम्ही तुम्हाला कॉल करू.";
             }
 
             chatBox.innerHTML += `
                 <div class="message">
-                    <img class="avatar bot-avatar" src="https://cdn-icons-png.flaticon.com/512/4712/4712036.png" alt="Bot" />
+                    <img class="avatar bot-avatar" src="https://laxmilandmarks.com/wp-content/uploads/wp-responsive-photo-gallery/5b0c66a0-2fb5-4ed8-8883-ef1ab4c9fee569dce7b779d2c.jpg" alt="Bot" />
                     <div class="bubble">${answer}</div>
                 </div>
             `;
@@ -680,7 +681,7 @@
         function showTyping() {
             chatBox.innerHTML += `
                 <div class="message" id="typing">
-                    <img class="avatar bot-avatar" src="https://cdn-icons-png.flaticon.com/512/4712/4712036.png" alt="Bot" />
+                    <img class="avatar bot-avatar" src="https://laxmilandmarks.com/wp-content/uploads/wp-responsive-photo-gallery/5b0c66a0-2fb5-4ed8-8883-ef1ab4c9fee569dce7b779d2c.jpg" alt="Bot" />
                     <div class="bubble"><span></span><span></span><span></span></div>
                 </div>
             `;
